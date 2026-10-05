@@ -1,0 +1,35 @@
+name: Second Pipeline
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches: [main]
+    paths:
+      - 'Calculator_2/**'
+
+  pull_request:
+    branches: [main]
+    paths:
+      - 'Calculator_2/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar Código do Repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Instalar dependências
+        working-directory: Calculator_2
+        run: npm install
+
+      - name: Executar testes
+        working-directory: Calculator_2
+        run: npm test
